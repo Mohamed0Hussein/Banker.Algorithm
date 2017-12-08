@@ -1,31 +1,28 @@
 package banker.algorithm;
 
 import java.util.*;
-
 public class process {
+    ArrayList allo,max,need;
     String name;
-    boolean isSafe;
-    public int noOfResources;
-    public ArrayList allocated,have,needs;
+    boolean isFree,isAdded;
     public process(String name,int n){
         this.name = name;
-        this.noOfResources = n;
-        this.allocated = new ArrayList(n);
-        this.have = new ArrayList(n);
-        this.needs = new ArrayList(n);
-        this.isSafe = false;
+        allo = new ArrayList(n);
+        max = new ArrayList(n);
+        need = new ArrayList(n);
+        isFree = false;
+        isAdded = false;
     }
-    public void setAllo(int a)
-    {
-        allocated.add(a);
+    public void addAllo(int a){allo.add(a);}
+    public void changeAllo(int index,int value){allo.set(index, value);}
+    public int getAllo(int i){return (int)allo.get(i);}
+    public void addMax(int a){max.add(a);}
+    public int getMax(int i){return (int)max.get(i);}
+    public void setNeed(){
+    for(int i=0;i<allo.size();i++)
+        need.add(this.getMax(i)-this.getAllo(i));
     }
-    public void setHave(int a)
-    {
-        allocated.add(a);
-    }
-    public void setNeed()
-    {
-        for(int i=0;i<noOfResources;i++)
-            needs.add((int)have.get(i)-(int)allocated.get(i));
-    }
+    public int getNeed(int i){return (int)need.get(i);}
+    public void changeNeed(int index,int value){need.set(index, value);}
+
 }

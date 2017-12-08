@@ -3,42 +3,68 @@ import java.util.*;
 public class BankerAlgorithm {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int noOfProcesses,noOfResources;
-        ArrayList seq = new ArrayList();
-        System.out.println("Enter how many processes in the system-:");
-        noOfProcesses = sc.nextInt();
-        ArrayList Processes = new ArrayList(noOfProcesses);
-        System.out.println("Enter how many resources in the system-:");
-        noOfResources = sc.nextInt();
-        ArrayList Resources = new ArrayList(noOfResources);
-        for(int i=0;i<noOfResources;i++)
-        {
-            System.out.println("enter Resource name and no.of instances respectively");
-            Resources.add(new resource(sc.nextLine(),sc.nextInt()));
-        }
-        for(int i=0;i<noOfProcesses;i++)
-        {
-            Processes.add(new process("P"+i,noOfResources));
-            for(int j=0;j<noOfResources;j++)
+        System.out.println("enter the no.of processes in the system:");
+        int nProcesses = sc.nextInt();
+        System.out.println("enter the no.of Resources in the system:");
+        int nResources = sc.nextInt();
+        ArrayList<process> Processes = new ArrayList(nProcesses);
+        for(int i=0;i<nProcesses;i++)
+            Processes.add(new process("P"+i,nResources));
+        System.out.println("enter the no.of Available instance of every resource respectively in the system:");
+        ArrayList AvailableRes = new ArrayList(nResources);
+        for(int i=0;i<nResources;i++)
+            AvailableRes.add(sc.nextInt());
+        for(int i=0;i<nProcesses;i++)
+            for(int j =0;j<nResources;j++)
             {
-            System.out.println("enter the no.of instances allocated and have respectively for resource "+((resource)(Resources.get(j))).Name +" -:");
-            process x = (process)Processes.get(i);
-            x.setAllo(sc.nextInt());
-            x.setHave(sc.nextInt());
-            x.setNeed();
+                System.out.println("enter the allocated instance for the process "+Processes.get(i).name+" of the resource R"+j+ " :");
+                (Processes.get(i)).addAllo(sc.nextInt());
+                System.out.println("enter the max instance for the process "+Processes.get(i).name+" of the resource R"+j + " :");
+                Processes.get(i).addMax(sc.nextInt());
             }
-        }
+        for(int i=0;i<nProcesses;i++)
+            Processes.get(i).setNeed();
+        ArrayList<process> seq = new ArrayList(nProcesses);
         while(true)
         {
-            int x = 0;
-            for(int i=0;i<noOfProcesses;i++)
-                if(((process)Processes.get(i)).isSafe)
-                    x++;
-            if(x==noOfProcesses)
+            int completed = 0;
+            for(int i =0;i<nProcesses;i++)
+                if(Processes.get(i).isFree)
+                    completed++;
+            if(completed == nProcesses)
                 break;
-            for(int i=0;i<noOfProcesses;i++)
-                if(((process)(Processes.get(i))).needs.get(i))
+            else
+            {
+                boolean can;
+                for(int i=0;i<nProcesses;i++)
+                {
+                    can = true;
+                    for(int j=0;j<nResources;j++)
+                    {
+                        if((int)AvailableRes.get(j)<Processes.get(i).getNeed(j))
+                            can = false;
+                    }
+                    if(can)
+                    {
+                        for(int j=0;j<nResources;j++)
+                        {
+                            Processes.get(i).isFree = true;
+                           AvailableRes.set(j,(int)AvailableRes.get(j)+Processes.get(i).getAllo(j));
+                            Processes.get(i).changeAllo(j, 0);
+                            Processes.get(i).changeNeed(j, 0);
+                        }
+                        if(!Processes.get(i).isAdded)
+                        {
+                            seq.add(Processes.get(i));
+                            Processes.get(i).isAdded = true;
+                        }
+                    }
+                }
+            }
         }
+        for(int i=0;i<seq.size();i++)
+            System.out.print(seq.get(i).name +" --> ");
+        System.out.println("End");
     }
     
 }
