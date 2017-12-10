@@ -3,6 +3,7 @@ import java.util.*;
 public class BankerAlgorithm {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        boolean isSafe = true;
         System.out.println("enter the no.of processes in the system:");
         int nProcesses = sc.nextInt();
         System.out.println("enter the no.of Resources in the system:");
@@ -27,6 +28,7 @@ public class BankerAlgorithm {
         ArrayList<process> seq = new ArrayList(nProcesses);
         while(true)
         {
+            int Rem1 = nProcesses - seq.size();
             int completed = 0;
             for(int i =0;i<nProcesses;i++)
                 if(Processes.get(i).isFree)
@@ -61,9 +63,21 @@ public class BankerAlgorithm {
                     }
                 }
             }
+            int Rem2 = nProcesses - seq.size();
+            if(Rem1 == Rem2)
+            {
+                isSafe = false;
+                break;
+            }
         }
+        System.out.println("\n\n\n\n");
+        if(!isSafe)
+            System.out.println("The System is Unsafe !!!");
+        else
+        {
         for(int i=0;i<seq.size();i++)
             System.out.print(seq.get(i).name +" --> ");
+        }
         System.out.println("End");
     }
     
