@@ -1,7 +1,7 @@
 package banker.algorithm;
 import java.util.*;
 public class BankerAlgorithm {
-    public static void main(String[] args) {
+    public void run(){
         Scanner sc = new Scanner(System.in);
         System.out.println("enter the no.of processes in the system:");
         int nProcesses = sc.nextInt();
@@ -24,7 +24,7 @@ public class BankerAlgorithm {
             }
         for(int i=0;i<nProcesses;i++)
             Processes.get(i).setNeed();
-        ArrayList<process> seq = new ArrayList(nProcesses);
+            ArrayList<process> seq = new ArrayList(nProcesses);
         while(true)
         {
             int completed = 0;
