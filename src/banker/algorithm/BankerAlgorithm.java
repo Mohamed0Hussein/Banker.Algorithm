@@ -1,7 +1,164 @@
 package banker.algorithm;
 import java.util.*;
 public class BankerAlgorithm {
-    public void CustomInput(){
+   public  void defaultInput(){
+       int noOfProcess = 5;
+       int noOfResources = 3;
+       int[][] allocation = new int [noOfProcess][noOfResources];
+       int[][] Max = new int [noOfProcess][noOfResources];
+       initAllocation(allocation);
+       initMax(Max);
+       int[] ResourceInstance = {10,5,7};
+       if(!checkResources(ResourceInstance, allocation, Max)){
+           System.err.println("Allocation or Max values are incorrect !!");       
+       }  
+       int[][] Need = new int [noOfProcess][noOfResources];
+       Need = CalculateNeed(allocation, Max);
+       if(Need == null)
+       {
+           System.err.println("Allocation or Max values are incorrect !!");
+       }
+       int[][] Available = new int [1][noOfResources];
+       initAvailable(Available);
+       System.out.println(Issafe(Max, Need, allocation, Available));
+       
+       
+   }
+    private void initAllocation(int allocation[][])
+   {
+       //p0
+       allocation[0][0] = 0;
+       allocation[0][1] = 1;
+       allocation[0][2] = 0;
+       //p1
+       allocation[1][0] = 2;
+       allocation[1][1] = 0;
+       allocation[1][2] = 0;
+       //p2
+       allocation[2][0] = 3;
+       allocation[2][1] = 0;
+       allocation[2][2] = 2;
+       //p3
+       allocation[3][0] = 2;
+       allocation[3][1] = 1;
+       allocation[3][2] = 1;
+       //p4
+       allocation[4][0] = 0;
+       allocation[4][1] = 0;
+       allocation[4][2] = 2;
+       
+   }
+   private void initMax(int Max[][])
+   {
+       //p0
+        Max[0][0] = 7;
+        Max[0][1] = 5;
+        Max[0][2] = 3;
+       //p1
+        Max[1][0] = 3;
+        Max[1][1] = 2;
+        Max[1][2] = 2;
+       //p2
+        Max[2][0] = 9;
+        Max[2][1] = 0;
+        Max[2][2] = 2;
+       //p3
+        Max[3][0] = 2;
+        Max[3][1] = 2;
+        Max[3][2] = 2;
+       //p4
+        Max[4][0] = 4;
+        Max[4][1] = 3;
+        Max[4][2] = 3;
+       
+   }
+   private boolean checkResources(int[] ResourceInstamce,int[][] alloacation,int[][] max){
+       for(int i = 0; i < 5;i++)
+       {
+           for(int j = 0; j < 3;j++)
+           {
+               if(ResourceInstamce[j] < alloacation[i][j] || ResourceInstamce[j] < max[i][j] )
+               {
+                   return false;
+               }
+           }
+       }
+       return true;
+   }
+   private void initAvailable(int[][] Availble)
+   {
+      Availble[0][0] = 3;
+      Availble[0][1] = 3;
+      Availble[0][2] = 2;
+   }
+  
+    private int [][] CalculateNeed(int allocation[][],int max[][]){
+        int Need[][] = new int [5][3];
+        for(int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 3 ;j++) {
+                if(max[i][j] < allocation[i][j])
+                {
+                    return null;
+                }
+                Need[i][j] = max[i][j]-allocation[i][j];  
+            }
+        }
+        return Need;
+        
+    }
+    private String Issafe(int max[][],int[][] need, int[][] allocation,int[][] available){
+        boolean check  = true,finish = false;
+       int[][] remaindProcess = new int [1][3];
+        
+           for(int i = 0; i< 5; i++)
+           {
+               
+                   if(available[0][0] > need[i][0])
+                   {
+                       
+                       available[0][0] += allocation[i][0];
+                       available[0][1] += allocation[i][1];
+                       available[0][2] += allocation[i][2];
+                   }
+                   else if(available[0][1] > need[i][1])
+                   {
+                       available[0][0] += allocation[i][0];
+                       available[0][1] += allocation[i][1];
+                       available[0][2] += allocation[i][2];
+                   }
+                   else if(available[0][2] > need[i][2])
+                   {
+                      available[0][0] += allocation[i][0];
+                      available[0][1] += allocation[i][1];
+                      available[0][2] += allocation[i][2];
+                   }
+                   else{
+                       remaindProcess[0][0] +=  need[i][0];
+                       remaindProcess[0][1] +=  need[i][1];
+                       remaindProcess[0][2] +=  need[i][2];           
+                   } 
+           }
+           if(remaindProcess[0][0] < available[0][0])
+           {
+               return "All process Allocated in safe state";
+           }
+           else if(remaindProcess[0][0] == available[0][0])
+           {
+               if(remaindProcess[0][1] < available[0][1])
+               {
+                return "All process Allocated in safe state";   
+               }
+               else if(remaindProcess[0][2] < available[0][2])
+               {
+                   return "All process Allocated in safe statey"; 
+               }
+           }
+          return "Not All the procees can be allocated safely";
+           
+    }
+    
+    public void customInput(){
         Scanner sc = new Scanner(System.in);
         boolean isSafe = true;
         System.out.println("enter the no.of processes in the system:");
