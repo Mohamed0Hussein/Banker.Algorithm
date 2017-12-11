@@ -5,14 +5,29 @@
  */
 package banker.algorithm;
 
+import java.util.Scanner;
+
 /**
  *
  * @author yehia
  */
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("If you want to use the default value of processes and redources press 1."
+                + "And to customize input press 2");
+        int x = sc.nextInt();
         BankerAlgorithm bankerAlgorithm = new BankerAlgorithm();
-        bankerAlgorithm.run();
+        if(x == 1){
+        
+        }
+        else if(x == 2)
+        {
+          bankerAlgorithm.CustomInput();  
+        }
+        else{
+            System.out.println("Not Availble Option");
+        }
     }
    
 }

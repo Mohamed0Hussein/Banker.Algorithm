@@ -1,7 +1,7 @@
 package banker.algorithm;
 import java.util.*;
 public class BankerAlgorithm {
-    public void run(){
+    public void CustomInput(){
         Scanner sc = new Scanner(System.in);
         boolean isSafe = true;
         System.out.println("enter the no.of processes in the system:");
