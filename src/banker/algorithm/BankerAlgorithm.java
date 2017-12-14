@@ -164,6 +164,7 @@ public class BankerAlgorithm {
              }
     }
 }
+}
 /*
 enter the no.of processes in the system:
 5
