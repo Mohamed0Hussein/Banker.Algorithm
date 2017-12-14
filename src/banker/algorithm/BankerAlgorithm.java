@@ -168,23 +168,18 @@ public class BankerAlgorithm {
         ArrayList<process> Processes = new ArrayList(nProcesses);
         for(int i=0;i<nProcesses;i++)
             Processes.add(new process("P"+i,nResources));
-        System.out.println("enter the no.of Available instance of every resource respectively in the system:");
+        System.out.println("enter the Available resources' instances");
         ArrayList AvailableRes = new ArrayList(nResources);
         for(int i=0;i<nResources;i++)
             AvailableRes.add(sc.nextInt());
+        System.out.println("enter the allocation matrix : ");
         for(int i=0;i<nProcesses;i++)
-        {
             for(int j =0;j<nResources;j++)
-            {
-                System.out.println("enter the allocated instance for the process "+Processes.get(i).name+" of the resource R"+j+ " :");
                 (Processes.get(i)).addAllo(sc.nextInt());
-            }
+        System.out.println("enter the max matrix : ");
+        for(int i=0;i<nProcesses;i++)
             for(int j =0;j<nResources;j++)
-            {
-                System.out.println("enter the max instance for the process "+Processes.get(i).name+" of the resource R"+j + " :");
                     Processes.get(i).addMax(sc.nextInt());
-            }
-        }
         for(int i=0;i<nProcesses;i++)
             Processes.get(i).setNeed();
         ArrayList<process> seq = new ArrayList(nProcesses);
