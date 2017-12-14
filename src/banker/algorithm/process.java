@@ -2,9 +2,9 @@ package banker.algorithm;
 
 import java.util.*;
 public class process {
-    ArrayList allo,max,need;
-    String name;
-    boolean isFree,isAdded;
+    public static ArrayList allo,max,need;
+    public static String name;
+    public static boolean isFree,isAdded;
     public process(String name,int n){
         this.name = name;
         allo = new ArrayList(n);
@@ -24,5 +24,7 @@ public class process {
     }
     public int getNeed(int i){return (int)need.get(i);}
     public void changeNeed(int index,int value){need.set(index, value);}
+    public String getName(){return this.name;}
+    
 
 }
