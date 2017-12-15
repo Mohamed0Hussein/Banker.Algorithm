@@ -26,5 +26,5 @@ public class process {
     public void changeNeed(int index,int value){need.set(index, value);}
     public String getName(){return this.name;}
     
-
+    
 }

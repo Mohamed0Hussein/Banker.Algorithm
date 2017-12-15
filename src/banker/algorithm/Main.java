@@ -13,8 +13,21 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        BankerAlgorithm bankerAlgorithm = new BankerAlgorithm();
-          bankerAlgorithm.customInput();
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Please enter the number of processes "
+                + " and the number of resources types");
+        
+        int numProcesses = sc.nextInt();
+        int numResourcesTypes = sc.nextInt();
+        
+        BankerAlgorithm ba = new BankerAlgorithm(numProcesses, 
+                numResourcesTypes);
+        String result = ba.execute();
+        
+        System.out.println();
+        
+        System.out.println(result);
     }
    
 }
