@@ -24,10 +24,16 @@ public class Main {
         BankerAlgorithm ba = new BankerAlgorithm(numProcesses, 
                 numResourcesTypes);
         String result = ba.execute();
-        
         System.out.println();
-        
         System.out.println(result);
+        System.out.println("if you want to request, enter 1 :");
+        if(sc.nextInt()==1)
+        {
+            System.out.println("which process requests ?? (enter only the number of the process!!!)");
+            String result2 = ba.Request(sc.nextInt());
+            System.out.println();
+            System.out.println(result2);   
+        }
     }
    
 }
