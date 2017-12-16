@@ -25,8 +25,7 @@ public class Main {
                 numResourcesTypes);
         String result = ba.execute();
         System.out.println();
-        System.out.println(result);
-        System.out.println("if you want to request, enter 1 :");
+        System.out.println("if you want to request, enter 1, else if you want the seq, enter 2 :");
         if(sc.nextInt()==1)
         {
             System.out.println("which process requests ?? (enter only the number of the process!!!)");
@@ -34,6 +33,7 @@ public class Main {
             System.out.println();
             System.out.println(result2);   
         }
+        System.out.println(result);
     }
    
 }
