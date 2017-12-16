@@ -3,9 +3,12 @@ import java.util.*;
 public class BankerAlgorithm {
     
     private int available[];
+    private int old_available[];
     private int max[][];
     private int allocation[][];
+    private int old_allocation[][];
     private int need[][];
+    private int old_need[][];
     private boolean finish[];
     private int processesNum;
     private int typesNum;
@@ -16,9 +19,12 @@ public class BankerAlgorithm {
         typesNum = numTypes;
         finish = new boolean[processesNum];
         available = new int[typesNum];
+        old_available = new int[typesNum];
         max = new int[processesNum][typesNum];
         allocation = new int[processesNum][typesNum];
+        old_allocation = new int[processesNum][typesNum];
         need = new int[processesNum][typesNum];
+        old_need = new int[processesNum][typesNum];
         req = new int[typesNum];
         getInput();
         
@@ -98,6 +104,9 @@ public class BankerAlgorithm {
         for(int i = 0; i < typesNum; i++) {
             available[i] = sc.nextInt();
         }
+        for(int i = 0; i < typesNum; i++) {
+            old_available[i] = available[i];
+        }
         
         sc.nextLine();
         
@@ -107,6 +116,7 @@ public class BankerAlgorithm {
             
             for(int j = 0; j < typesNum; j++) {
                 allocation[i][j] = sc.nextInt();
+                old_allocation[i][j]=allocation[i][j];
             }
             
             sc.nextLine();
@@ -121,13 +131,12 @@ public class BankerAlgorithm {
         }
     }
     public String Request(int target){
-            setReq();
-            for(int i=0;i<typesNum;i++)
-                if(target == i)
-                {
+                    setReq();
                     boolean can = true;
                     for(int j=0;j<typesNum;j++)
-                        if(req[j]>need[i][j])
+                        if(req[j]>need[target][j])
+                            can = false;
+                        else
                             if(req[j]> available[j])
                                 can = false;
                     if(can)
@@ -135,13 +144,13 @@ public class BankerAlgorithm {
                         for(int j = 0;j<typesNum;j++)
                         {
                             available[j] = available[j] - req[j];
-                            allocation[i][j] = allocation[i][j] + req[j];
-                            need[i][j] = need[i][j] - req[j];
+                            allocation[target][j] = allocation[target][j] + req[j];
+                            need[target][j] = need[target][j] - req[j];
                         }
                     }
                     else
                         return "Request Can't Be Granted";
-                }
+                
         String res = execute();
         if(res.charAt(0) == 'S')
             return "Request CAN be granted";
@@ -152,12 +161,29 @@ public class BankerAlgorithm {
         System.out.println("Please enter the requested instances ");
         for(int i=0;i<typesNum;i++)
             req[i] = sc.nextInt();
+        returnstate();
     }
     private void calculateNeed() {
         for(int i = 0; i < processesNum; i++) {
             for(int j = 0; j < typesNum; j++) {
                 need[i][j] = max[i][j] - allocation[i][j];
+                old_need[i][j] = max[i][j] - allocation[i][j];
             }
+        }
+    }
+
+    private void returnstate() {
+        for(int i=0;i<typesNum;i++){
+            available[i]=old_available[i];
+        }
+        for(int i=0;i<processesNum;i++){
+            for(int j=0;j<typesNum;j++){
+                allocation[i][j]=old_allocation[i][j];
+                need[i][j]=old_need[i][j];
+            }
+        }
+        for(int i=0;i<processesNum;i++){
+            finish[i]=false;
         }
     }
 }
