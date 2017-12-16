@@ -36,7 +36,7 @@ public class BankerAlgorithm {
     }
     
     public String execute() {
-        String result = "Sequence of the safe state is  :-\n";
+        String result = "Safe \nsafe seq is : \n";
         
         int finished = 0;
         while(true) {
@@ -87,7 +87,7 @@ public class BankerAlgorithm {
                             deadlockProcesses += "P" + k + " ";
                         }
                     }
-                    result = "The System is Unsafe\n" 
+                    result = "Unsafe\n" 
                             + "The processes causing the deadlock are :-\n"
                             + deadlockProcesses;
                     break;
@@ -149,13 +149,13 @@ public class BankerAlgorithm {
                         }
                     }
                     else
-                        return "Request Can't Be Granted";
+                        return "Request Can't Be Granted !!";
                 
         String res = execute();
         if(res.charAt(0) == 'S')
-            return "Request CAN be granted";
+            return "Request CAN be granted and the State of the seq was \n" + res;
         else
-            return "Request Can't Be Granted 11111";
+            return "Request Can't Be Granted !!";
     }
     private void setReq(){
         System.out.println("Please enter the requested instances ");

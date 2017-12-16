@@ -33,7 +33,8 @@ public class Main {
             System.out.println();
             System.out.println(result2);   
         }
-        System.out.println(result);
+        else
+            System.out.println("the State of the seq was \n" +result);
     }
    
 }
